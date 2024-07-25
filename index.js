@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const imageDownloader = require('image-downloader');
+const Place = require('./models/Place.js')
 const bcrypt = require('bcrypt');
 const User = require('./models/User.js'); // Ensure the User model is correctly defined
 const fs = require('fs');
@@ -150,8 +151,32 @@ app.post('/upload',photoMiddleware.array('photos',100),(req,res) =>{
 })
 
 
+
+app.post('/place' , (req,res) =>  {
+  const{token} =req.cookies;
+
+  const{
+      title,address,addedPhoto,description,
+    perks,extraInfo,checkIn,checkOut,maxGuest,} = req.body;
+  jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+    if (err) throw err;
+    const placeDoc =await Place.create({
+
+      owner:userData.id,
+      title,address,Photo,description,
+      perks,extraInfo,checkIn,checkOut,maxGuest,
+    })
+   res.json(placeDoc);
+     
+    })
+
+})
+
+
+
 // Start the server
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const PlaceSchema =new mongoose.Schema({
     owner:{type:mongoose.Schema.Types.Objectid,ref:'User'},
-    titel :String,
+    title :String,
     address:String,
     photo:[String],
     description:String,
