@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 const imageDownloader = require('image-downloader');
 const Place = require('./models/Place.js')
 const bcrypt = require('bcrypt');
-const User = require('./models/User.js'); // Ensure the User model is correctly defined
+const User = require('./models/User.js'); 
 const fs = require('fs');
 require('dotenv').config();
 
@@ -152,19 +152,19 @@ app.post('/upload',photoMiddleware.array('photos',100),(req,res) =>{
 
 
 
-app.post('/place' , (req,res) =>  {
+app.post('/places' , (req,res) =>  {
   const{token} =req.cookies;
 
   const{
-      title,address,addedPhoto,description,
-    perks,extraInfo,checkIn,checkOut,maxGuest,} = req.body;
+      title,address,addPhotos,description,
+    perks,extraInfo,checkIn,checkOut,maxGuests,} = req.body;
   jwt.verify(token, jwtSecret, {}, async (err, userData) => {
     if (err) throw err;
     const placeDoc =await Place.create({
 
       owner:userData.id,
-      title,address,Photo,description,
-      perks,extraInfo,checkIn,checkOut,maxGuest,
+      title,address,photos:addPhotos,description,
+      perks,extraInfo,checkIn,checkOut,maxGuests,
     })
    res.json(placeDoc);
      
@@ -173,6 +173,19 @@ app.post('/place' , (req,res) =>  {
 })
 
 
+app.get('/places',(req,res) =>{
+  const {token} =req.cookies;
+  jwt.verify(token, jwtSecret, {}, async  (err, userData) => {
+  const{id}= userData;
+  res.json(await Place.find({owner:id}));
+});
+});
+
+app.get('/places/:id', async (req,res) =>{
+
+const {id} =req.params;
+res.json(await Place.findById(id));
+ })
 
 // Start the server
 const PORT = process.env.PORT || 4000;
