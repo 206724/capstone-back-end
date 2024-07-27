@@ -119,7 +119,7 @@ app.post('/upload-by-link', async (req, res) => {
   const newName = 'photo' + Date.now() + '.jpg';
   const dest = __dirname + '/uploads/' + newName;
 
-  // Ensure the /uploads directory exists
+ 
   fs.mkdirSync(__dirname + '/uploads', { recursive: true });
 
   try {
@@ -192,23 +192,7 @@ res.json(await Place.findById(id));
  
 app.put('/places', async (req,res) => {
  
-  const {token} = req.cookies;
-  const {
-    id, title,address,addedPhotos,description,
-    perks,extraInfo,checkIn,checkOut,maxGuests,price,
-  } = req.body;
-  jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-    if (err) throw err;
-    const placeDoc = await Place.findById(id);
-    if (userData.id === placeDoc.owner.toString()) {
-      placeDoc.set({
-        title,address,photos:addedPhotos,description,
-        perks,extraInfo,checkIn,checkOut,maxGuests,price,
-      });
-      await placeDoc.save();
-      res.json('ok');
-    }
-  });
+  res.json(await Place.find)
 });
 
 // Start the server
