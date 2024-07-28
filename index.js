@@ -13,7 +13,7 @@ const fs = require('fs');
 require('dotenv').config();
 
 const multer =require('multer');
-const { Console } = require('console');
+// const { Console } = require('console');
 
 
 const app = express();
@@ -218,30 +218,43 @@ app.get('/places', async (req,res) => {
   res.json(await Place.find())
 });
 
-app.post('/bookings', async (req, res) => {
 
-  const {
-    place,checkIn,checkOut,numberOfGuests,name,phone,price,
-  } = req.body;
-  Booking.create({
-    place,checkIn,checkOut,numberOfGuests,name,phone,price,
-    user:userData.id,
-  }).then((doc) => {
-    res.json(doc);
-  }).catch((err) => {
-    throw err;
+const getUserDataFromReq = async (req) => {
+  const { token } = req.cookies;
+  if (!token) {
+    throw new Error('No token provided');
+  }
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+      if (err) return reject(err);
+      const { name, email, _id } = await User.findById(userData.id);
+      resolve({ name, email, id: _id });
+    });
   });
+};
+
+
+app.post('/bookings', async (req, res) => {
+  try {
+    const userData = await getUserDataFromReq(req);
+    const { place, checkIn, checkOut, numberOfGuests, name, phone, price } = req.body;
+    
+    const booking = await Booking.create({
+      place, checkIn, checkOut, numberOfGuests, name, phone, price,
+      user: userData.id,
+    });
+    
+    res.json(booking);
+  } catch (err) {
+    console.error('Error creating booking:', err);
+    res.status(500).json({ error: 'Failed to create booking' });
+  }
 });
 
 
 
-
-
-
-
-
 app.get('/bookings', async (req,res) => {
-  mongoose.connect(process.env.MONGO_URL);
+
   const userData = await getUserDataFromReq(req);
   res.json( await Booking.find({user:userData.id}).populate('place') );
 });
