@@ -43,9 +43,9 @@ npm install
 Create a `.env` file in the root of the project and add the following environment variables:
 
 ```env
-MONGO_URL=<your-mongodb-connection-string>
-JWT_SECRET=<your-jwt-secret>
-PORT=<your-port> # default is 4000
+MONGO_URL=<mongodb-connection-string>
+JWT_SECRET-jwt-secret>
+PORT=[<http://localhost:5173>] # default is 4000
 ```
 
 ## Running the Server
