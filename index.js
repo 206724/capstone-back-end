@@ -13,7 +13,7 @@ const fs = require('fs');
 require('dotenv').config();
 
 const multer =require('multer');
-// const { Console } = require('console');
+
 
 
 const app = express();
@@ -21,8 +21,8 @@ app.use(cookieParser());
 
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
-const bcryptSaltRounds = 10; // Number of salt rounds for bcrypt
-const jwtSecret = process.env.JWT_SECRET || 'your_jwt_secret'; // JWT secret from environment variable or fallback
+const bcryptSaltRounds = 10; 
+const jwtSecret = process.env.JWT_SECRET 
 
 const allowedOrigins = ['http://localhost:5173', 'http://127.0.0.1:5173'];
 
@@ -174,7 +174,8 @@ app.put('/places', async (req,res) => {
   });
 });
 
-app.post('/user-places', (req,res) => {
+///all place list
+app.post('/places', (req,res) => {
   mongoose.connect(process.env.MONGO_URL);
   const {token} = req.cookies;
   const {
@@ -258,15 +259,6 @@ app.get('/bookings', async (req,res) => {
   const userData = await getUserDataFromReq(req);
   res.json( await Booking.find({user:userData.id}).populate('place') );
 });
-
-
-
-
-
-
-
-
-
 
 
 // Start the server
