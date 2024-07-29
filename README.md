@@ -209,7 +209,7 @@ cd frontend
 2. Install the frontend dependencies:
 
 ```sh
-npm install "tailwindcss","axios",date-fns,"cookie-parser," "cors," "date-fns", "react", "react-dom": "^18.3.1", "react-router-dom"
+npm install "tailwindcss","axios",date-fns,"cookie-parser," "cors," "date-fns", "react", "react-dom","react-router-dom"
 ```
 
 3. Start the frontend development server:
