@@ -65,6 +65,12 @@ The server will start on the port specified in the `.env` file, or default to po
 - **GET /test**
 
   Returns a test message.
+  
+{
+  "message": "test ok"
+}
+
+
 
 ### User Endpoints
 
