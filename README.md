@@ -1,8 +1,10 @@
 
 ```markdown
-# Booking Platform
+# Back-End for Airbnb Clone
 
-This project is a booking platform that allows users to register, login, manage places, and make bookings. It is built using Node.js, Express, MongoDB, and React.
+## Project Description
+
+This is the back-end of an Airbnb clone application built with Node.js, Express, and MongoDB. The application provides RESTful APIs for user authentication, place management, and booking management.
 
 ## Table of Contents
 
@@ -17,19 +19,23 @@ This project is a booking platform that allows users to register, login, manage 
 
 ## Prerequisites
 
-Ensure you have the following installed on your machine:
-
-- Node.js (v14 or higher)
+- Node.js
+- npm or yarn
 - MongoDB
-- npm (Node Package Manager)
+
+## Installation
+
+1. Clone the repository:
+   ```sh
+   git clone <https://github.com/206724/capstone-back-end.git>
 
 ## Installation
 
 1. Clone the repository:
 
 ```sh
-git clone <repository-url>
-cd <repository-directory>
+git clone <https://github.com/206724/capstone-back-end.git>
+cd <api>
 ```
 
 2. Install the server dependencies:
@@ -57,6 +63,16 @@ nodemon index.js
 ```
 
 The server will start on the port specified in the `.env` file, or default to port 4000 if not specified.
+
+## Project Structure
+
+api/
+|-- models/
+|   |-- Booking.js
+|   |-- Place.js
+|   |-- User.js
+|-- index.js
+
 
 ## API Endpoints
 
